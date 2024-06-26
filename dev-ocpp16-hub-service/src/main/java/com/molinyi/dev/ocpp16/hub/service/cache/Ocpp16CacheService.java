@@ -14,21 +14,21 @@ public class Ocpp16CacheService {
 
     private static Map<String, WebSocketSession> cahce = new ConcurrentHashMap<>();
 
-    public static void addSession(WebSocketSession session) {
+    public void addSession(WebSocketSession session) {
 
         final String evseId = OcppUtil.getEvseId(session);
         cahce.put(evseId, session);
 
     }
 
-    public static void removeSession(WebSocketSession session) {
+    public void removeSession(WebSocketSession session) {
 
         final String evseId = OcppUtil.getEvseId(session);
         cahce.remove(evseId);
 
     }
 
-    public static long getSessionCount() {
+    public long getSessionCount() {
 
         return cahce.size();
 

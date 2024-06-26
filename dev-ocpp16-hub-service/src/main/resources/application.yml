@@ -1,6 +1,8 @@
 #server.port=8001
 server:
   port: 8001
+  servlet:
+    context-path: /ocpp16-hub-service
 spring:
   application:
     name: ocpp16-hub-service

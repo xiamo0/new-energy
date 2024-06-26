@@ -1,6 +1,8 @@
 #server.port=8001
 server:
   port: 8002
+  servlet:
+    context-path: /web-service
 spring:
   application:
     name: web-service
