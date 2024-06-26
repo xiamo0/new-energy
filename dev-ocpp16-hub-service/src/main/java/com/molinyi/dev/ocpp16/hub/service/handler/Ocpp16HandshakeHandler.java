@@ -9,8 +9,10 @@ import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 @Service
 public class Ocpp16HandshakeHandler extends DefaultHandshakeHandler {
 
+
     @Override
     protected boolean isValidOrigin(ServerHttpRequest request) {
+
         return super.isValidOrigin(request);
     }
 
