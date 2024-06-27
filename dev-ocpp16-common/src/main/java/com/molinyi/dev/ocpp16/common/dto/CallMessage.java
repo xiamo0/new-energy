@@ -1,10 +1,6 @@
 package com.molinyi.dev.ocpp16.common.dto;
 
 import cn.hutool.core.util.StrUtil;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
 
 /**
  * [<MessageTypeId>, "<UniqueId>", "<Action>", {<Payload>}]
@@ -14,17 +10,8 @@ import java.io.Serializable;
  * {"chargePointVendor": "VendorX", "chargePointModel": "SingleSocketCharger"}
  * ]
  */
-@Data
-@NoArgsConstructor
-public class CallMessage<T extends BaseMessage> implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    private String uniqueId;
-
-    private String action;
-
-    private T payload;
+public record CallMessage<T extends BaseMessage>(String uniqueId, String action, T payload) {
 
     @Override
     public String toString() {
@@ -32,4 +19,5 @@ public class CallMessage<T extends BaseMessage> implements Serializable {
         return StrUtil.format("[{}, {}, {}, {}]", MessageType.CALL.getValue(), uniqueId, action, payload.toString());
 
     }
+
 }

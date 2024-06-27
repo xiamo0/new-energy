@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.molinyi.dev.ocpp16.common.dto.BaseMessage;
 import com.molinyi.dev.ocpp16.common.dto.fieldtype.RegistrationStatus;
+import com.molinyi.dev.ocpp16.common.dto.service.PoJoService;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +25,6 @@ public class BootNotificationConf extends BaseMessage {
 
     @Override
     public String toString() {
-        return this.serialize();
+        return PoJoService.serialize(this);
     }
 }

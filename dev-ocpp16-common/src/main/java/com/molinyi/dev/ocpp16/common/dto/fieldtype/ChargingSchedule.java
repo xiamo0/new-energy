@@ -3,30 +3,36 @@ package com.molinyi.dev.ocpp16.common.dto.fieldtype;
 import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.molinyi.dev.ocpp16.common.dto.BaseMessage;
 import com.molinyi.dev.ocpp16.common.dto.service.PoJoService;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor(force = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class IdTagInfo extends BaseMessage {
+public class ChargingSchedule extends BaseMessage {
 
-    private static final long serialVersionUID = 1L;
+    private Integer duration;
 
-    @JsonProperty("expiryDate")
     @JsonFormat(pattern = DatePattern.UTC_PATTERN)
-    private LocalDateTime expiryDate;
+    private LocalDateTime startSchedule;
 
-    @JsonProperty("parentIdTag")
-    private String parentIdTag;
+    @NonNull
+    private ChargingRateUnitEnum chargingRateUnit;
 
-    @JsonProperty("status")
-    private AuthorizationStatus status;
+    @NonNull
+    private List<ChargingSchedulePeriod> chargingSchedulePeriod;
+
+    // 保留1位小数
+    private BigDecimal minChargingRate;
 
     @Override
     public String toString() {

@@ -1,6 +1,5 @@
 package com.molinyi.dev.ocpp16.common.dto.fieldtype;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.molinyi.dev.ocpp16.common.dto.BaseMessage;
 import com.molinyi.dev.ocpp16.common.dto.service.PoJoService;
 import lombok.Data;
@@ -9,16 +8,24 @@ import lombok.NonNull;
 
 @Data
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class AuthorizationData extends BaseMessage {
+public class SampledValue extends BaseMessage {
 
     @NonNull
-    private IdToken idTag;
+    private String value;
 
-    private IdTagInfo idTagInfo;
+    private ReadingContext context;
+    private ValueFormat format;
+
+    private Measurand Measurand;
+
+    private Phase phase;
+
+    private Location location;
+
+    private UnitOfMeasure unit;
 
     @Override
     public String toString() {
-       return PoJoService.serialize(this);
+        return PoJoService.serialize(this);
     }
 }

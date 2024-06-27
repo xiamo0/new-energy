@@ -7,18 +7,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import java.math.BigDecimal;
+
 @Data
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AuthorizationData extends BaseMessage {
-
+public class ChargingSchedulePeriod extends BaseMessage {
     @NonNull
-    private IdToken idTag;
+    private Integer startPeriod;
+    // 保留1位小数
+    @NonNull
+    private BigDecimal limit;
 
-    private IdTagInfo idTagInfo;
+    private Integer numberPhases;
 
     @Override
     public String toString() {
-       return PoJoService.serialize(this);
+        return PoJoService.serialize(this);
     }
 }
