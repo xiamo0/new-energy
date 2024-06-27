@@ -26,12 +26,15 @@ public class PoJoService {
 
     public static CallMessage deserialize(String str) {
 
-        final String str1 = str.replace("[", "").replace("]", "");
-        final String[] split = str1.split(",");
+        //[<MessageTypeId>, "<UniqueId>", "<Action>", {<Payload>}]
+        String result = str.substring(1, str.length() - 1);
+        final String[] split1 = result.split(",", 2);
+        String MessageTypeId = split1[0];
+        final String[] split2 = split1[1].split(",", 3);
 
-        final String uniqueId = split[1].trim();
-        final String action = split[2].trim();
-        final String payload = split[3].trim();
+        final String uniqueId = split2[0].trim();
+        final String action = split2[1].trim();
+        final String payload = split2[2].trim();
         final BaseMessage baseMessage = deSerializePlayload(MessageType.CALL, action, payload);
 
         return new CallMessage<>(uniqueId, action, baseMessage);
@@ -39,12 +42,15 @@ public class PoJoService {
     }
 
     public static CallResultMessage deserialize(String str, String action) {
+        // [<MessageTypeId>, "<UniqueId>", {<Payload>}]
+        String result = str.substring(1, str.length() - 1);
+        final String[] split = result.split(",", 2);
 
-        final String str1 = str.replace("[", "").replace("]", "");
-        final String[] split = str1.split(",");
+        final String messageTypeId = split[0];
+        final String[] split1 = split[1].split(",", 2);
 
-        final String uniqueId = split[1].trim();
-        final String payload = split[2].trim();
+        final String uniqueId = split1[0];
+        final String payload = split1[1];
 
         final BaseMessage baseMessage = deSerializePlayload(MessageType.CALL_RESULT, action, payload);
 
@@ -73,6 +79,7 @@ public class PoJoService {
     public static <T extends BaseMessage> T deSerializable(String json, Class<T> type) {
 
         final ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         mapper.registerModule(new JavaTimeModule());
         try {
             return mapper.readValue(json, type);
