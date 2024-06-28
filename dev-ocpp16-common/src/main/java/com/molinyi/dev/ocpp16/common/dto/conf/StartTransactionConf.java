@@ -1,0 +1,26 @@
+package com.molinyi.dev.ocpp16.common.dto.conf;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.molinyi.dev.ocpp16.common.dto.BaseMessage;
+import com.molinyi.dev.ocpp16.common.dto.fieldtype.IdTagInfo;
+import com.molinyi.dev.ocpp16.common.dto.service.PoJoService;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+
+@Data
+@NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class StartTransactionConf extends BaseMessage {
+
+    @NonNull
+    private IdTagInfo idTagInfo;
+
+    @NonNull
+    private Integer transactionId;
+
+    @Override
+    public String toString() {
+        return PoJoService.serialize(this);
+    }
+}
