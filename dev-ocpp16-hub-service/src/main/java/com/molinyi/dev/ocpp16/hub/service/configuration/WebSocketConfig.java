@@ -1,7 +1,7 @@
 package com.molinyi.dev.ocpp16.hub.service.configuration;
 
 import com.molinyi.dev.ocpp16.hub.service.handler.Ocpp16HandshakeHandler;
-import com.molinyi.dev.ocpp16.hub.service.handler.Ocpp16MessageHandler;
+import com.molinyi.dev.ocpp16.hub.service.handler.WebsocketMessageHandler;
 import com.molinyi.dev.ocpp16.hub.service.interceptor.Ocpp16HandshakeInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 public class WebSocketConfig implements WebSocketConfigurer {
 
     @Autowired
-    Ocpp16MessageHandler ocpp16MessageHandler;
+    WebsocketMessageHandler ocpp16MessageHandler;
 
     @Autowired
     Ocpp16HandshakeHandler ocpp16HandshakeHandler;

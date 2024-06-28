@@ -1,8 +1,6 @@
 package com.molinyi.dev.ocpp16.common.dto.req;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.infypower.fycev.device.ocpp.common.AbstractRequestAction;
-import com.infypower.fycev.device.ocpp.response.RemoteStopTransactionResponse;
 import com.molinyi.dev.ocpp16.common.dto.BaseMessage;
 import com.molinyi.dev.ocpp16.common.dto.service.PoJoService;
 import lombok.Data;

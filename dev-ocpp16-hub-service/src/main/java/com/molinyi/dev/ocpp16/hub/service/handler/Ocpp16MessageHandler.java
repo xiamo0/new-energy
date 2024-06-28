@@ -1,68 +1,64 @@
 package com.molinyi.dev.ocpp16.hub.service.handler;
 
-import com.molinyi.dev.ocpp16.hub.service.cache.Ocpp16CacheService;
+import com.molinyi.dev.ocpp16.common.dto.CallMessage;
+import com.molinyi.dev.ocpp16.common.dto.CallResultMessage;
+import com.molinyi.dev.ocpp16.common.dto.MessageMapping;
+import com.molinyi.dev.ocpp16.common.dto.conf.BootNotificationConf;
+import com.molinyi.dev.ocpp16.common.dto.conf.HeartbeatConf;
+import com.molinyi.dev.ocpp16.common.dto.fieldtype.RegistrationStatus;
+import com.molinyi.dev.ocpp16.common.dto.service.PoJoService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.DependsOn;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
-import org.springframework.web.socket.*;
-import org.springframework.web.socket.handler.TextWebSocketHandler;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 
-import java.io.IOException;
-import java.net.URI;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Slf4j
 @Service
-@DependsOn({"ocpp16CacheService"})
-public class Ocpp16MessageHandler extends TextWebSocketHandler {
+public class Ocpp16MessageHandler extends MessageHandler {
 
-    @Autowired
-    private Environment environment;
-
-    @Autowired
-    private Ocpp16CacheService ocpp16CacheService;
 
     @Override
-    public void handleTextMessage(WebSocketSession session, TextMessage message)
-            throws InterruptedException, IOException {
-        log.info("port {}",environment.getProperty("server.port"));
+    public void handleCallMessage(WebSocketSession session, String message) {
 
+        final CallMessage callMessage = PoJoService.deserialize(message);
+        final String action = callMessage.action();
 
-        String payload = message.getPayload();
-        session.sendMessage(new TextMessage("response " + payload + " "));
+        CallResultMessage callResultMessage = null;
+        if (MessageMapping.HEARTBEAT.getAction().equals(action)) {
+            final HeartbeatConf heartbeatConf = new HeartbeatConf();
+            heartbeatConf.setCurrentTime(LocalDateTime.now());
+            callResultMessage = new CallResultMessage(callMessage.uniqueId(), heartbeatConf);
+        }
+        if (MessageMapping.BOOT_NOTIFICATION.getAction().equals(action)) {
+            final BootNotificationConf bootNotificationConf = new BootNotificationConf();
+            bootNotificationConf.setCurrentTime(LocalDateTime.now());
+            bootNotificationConf.setInterval(10);
+            bootNotificationConf.setStatus(RegistrationStatus.Accepted);
+            callResultMessage = new CallResultMessage(callMessage.uniqueId(), bootNotificationConf);
+        }
+
+        if (Objects.isNull(callResultMessage)) {
+            return;
+        }
+        try {
+            session.sendMessage(new TextMessage(callResultMessage.toString()));
+        } catch (Exception e) {
+            log.error("error {}", e.getMessage());
+        }
+
 
     }
 
     @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-
-        super.afterConnectionEstablished(session);
-        ocpp16CacheService.addSession(session);
+    public void handleCallResultMessage(WebSocketSession session, String message) {
 
     }
 
     @Override
-    public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-        super.handleMessage(session, message);
-    }
+    public void handleCallErrorMessage(WebSocketSession session, String message) {
 
-    @Override
-    protected void handlePongMessage(WebSocketSession session, PongMessage message) throws Exception {
-        log.info("Pong message received");
     }
-
-    @Override
-    public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-        log.error("Transport error occurred: {}", exception.getMessage());
-    }
-
-    @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        log.info("Connection closed with status: {}", status.getReason());
-        final URI uri = session.getUri();
-        log.info("Connection closed with URI: {}", uri.toString());
-        ocpp16CacheService.removeSession(session);
-    }
-
 }
