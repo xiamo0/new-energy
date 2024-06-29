@@ -23,7 +23,6 @@ public abstract class MessageHandler /*implements BaseHandler*/ {
 
         }
 
-
     }
 
     public abstract void handleCallMessage(WebSocketSession session, String message);

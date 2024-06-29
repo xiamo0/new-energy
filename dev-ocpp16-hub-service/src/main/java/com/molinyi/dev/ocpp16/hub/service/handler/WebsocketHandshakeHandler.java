@@ -7,7 +7,7 @@ import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 
 @Slf4j
 @Service
-public class Ocpp16HandshakeHandler extends DefaultHandshakeHandler {
+public class WebsocketHandshakeHandler extends DefaultHandshakeHandler {
 
 
     @Override

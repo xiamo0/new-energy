@@ -41,6 +41,7 @@ class MyWebSocketClient extends WebSocketClient {
 
     @Override
     public void onMessage(String message) {
+
         System.out.println("Received message from the server: " + message);
     }
 

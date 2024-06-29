@@ -1,6 +1,6 @@
 package com.molinyi.dev.ocpp16.hub.service.configuration;
 
-import com.molinyi.dev.ocpp16.hub.service.handler.Ocpp16HandshakeHandler;
+import com.molinyi.dev.ocpp16.hub.service.handler.WebsocketHandshakeHandler;
 import com.molinyi.dev.ocpp16.hub.service.handler.WebsocketMessageHandler;
 import com.molinyi.dev.ocpp16.hub.service.interceptor.Ocpp16HandshakeInterceptor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     WebsocketMessageHandler ocpp16MessageHandler;
 
     @Autowired
-    Ocpp16HandshakeHandler ocpp16HandshakeHandler;
+    WebsocketHandshakeHandler ocpp16HandshakeHandler;
 
     @Autowired
     Ocpp16HandshakeInterceptor cpp16HandshakeInterceptor;
