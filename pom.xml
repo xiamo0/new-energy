@@ -15,6 +15,7 @@
         <module>dev-web-service</module>
         <module>dev-ocpp16-common</module>
         <module>dev-ocpp20-common</module>
+        <module>dev-authorization-service</module>
     </modules>
     <description>新能源</description>
 

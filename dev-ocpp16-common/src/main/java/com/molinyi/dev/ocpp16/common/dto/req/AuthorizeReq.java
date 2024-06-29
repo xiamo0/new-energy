@@ -7,6 +7,10 @@ import com.molinyi.dev.ocpp16.common.dto.service.PoJoService;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 充电开始前和充电结束前，都需要身份验证
+ * 如果提交的 idTag 与开始交易时提交的 idTag 相同，则充电点在停止交易前不得发送 Authorize.req
+ */
 @Data
 @NoArgsConstructor
 public class AuthorizeReq extends BaseMessage {
