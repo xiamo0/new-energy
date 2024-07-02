@@ -16,6 +16,7 @@
         <module>dev-ocpp16-common</module>
         <module>dev-ocpp20-common</module>
         <module>dev-authorization-service</module>
+        <module>dev-ocpi-common</module>
     </modules>
     <description>新能源</description>
 
@@ -36,6 +37,25 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>3.5.7</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>1.5.22</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dtflys.forest</groupId>
+                <artifactId>forest-spring-boot-starter</artifactId>
+                <version>1.5.36</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.java-websocket</groupId>

@@ -2,11 +2,9 @@ package com.molinyi.dev.ocpp16.common.dto;
 
 import lombok.Data;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
 
-@Slf4j
 @Data
 public class Configuration implements Serializable {
 
